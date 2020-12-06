@@ -22,7 +22,7 @@
 #include <linux/can/raw.h>
 
 int main(int argc, char **argv){
-	ros::init(argc,argv, "cansend");
+	ros::init(argc,argv, "candump");
 	ros::NodeHandle nh;
 
 	//create publisher for topic 1
@@ -44,7 +44,7 @@ int main(int argc, char **argv){
 
 	int nbytes;
 	struct can_frame frame;
-	float f;
+	float f = 0;
 	std_msgs::Float32 msgfloat;
 	std_msgs::Int8 msgint;
 
@@ -54,7 +54,7 @@ int main(int argc, char **argv){
 		__u8 b[] = {frame.data[3], frame.data[2], frame.data[1], frame.data[0]};
 		memcpy(&f, &b, sizeof(f));
 		msgfloat.data = f;
-		msgint.data = frame.data[4];
+		msgint.data = frame.data[5];
 
 		pub1.publish(msgfloat);
 		pub2.publish(msgint);
